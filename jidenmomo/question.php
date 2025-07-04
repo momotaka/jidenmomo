@@ -55,9 +55,9 @@ $current_answer = isset($answers_data['answers'][$current_question['id']])
         </div>
     </nav>
 
-    <div class="container py-5">
+    <div class="container-fluid py-3 py-md-5">
         <div class="row justify-content-center">
-            <div class="col-md-10 col-lg-9">
+            <div class="col-12 col-md-11 col-lg-10">
                 <!-- 進捗バー -->
                 <div class="mb-4">
                     <div class="d-flex justify-content-between align-items-center mb-2">
@@ -93,9 +93,9 @@ $current_answer = isset($answers_data['answers'][$current_question['id']])
                             <input type="hidden" id="questionIndex" value="<?php echo $current_index; ?>">
                             
                             <div class="mb-4">
-                                <textarea class="form-control" id="answer" rows="20" 
+                                <textarea class="form-control" id="answer" rows="30" 
                                           placeholder="ここに回答を入力してください..."
-                                          style="min-height: 500px; font-size: 16px; line-height: 1.8;"><?php echo htmlspecialchars($current_answer); ?></textarea>
+                                          style="min-height: 600px; font-size: 18px; line-height: 2.0;"><?php echo htmlspecialchars($current_answer); ?></textarea>
                                 <div class="form-text">
                                     回答は自動的に保存されます。じっくりと思い出しながら、具体的なエピソードを交えて記入してください。
                                 </div>

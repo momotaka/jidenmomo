@@ -154,21 +154,38 @@ textarea.form-control:focus {
 /* レスポンシブ対応 */
 @media (max-width: 768px) {
     .container {
-        padding-left: 15px;
-        padding-right: 15px;
+        padding-left: 10px;
+        padding-right: 10px;
     }
     
     .card-body {
-        padding: 1.5rem;
+        padding: 1rem;
     }
     
-    textarea.form-control {
-        font-size: 14px;
+    /* モバイルでの大きなテキストエリア */
+    #answer {
+        min-height: 70vh !important;  /* 画面の70%の高さ */
+        font-size: 16px !important;
+        line-height: 1.8 !important;
+        padding: 15px !important;
     }
     
+    /* 質問カードのパディングを調整 */
+    .card-body.p-4 {
+        padding: 1rem !important;
+    }
+    
+    /* ボタンを縦並びに */
     .btn-group {
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    /* ナビゲーションボタンを大きく */
+    .card-footer .btn {
+        padding: 12px 20px;
+        font-size: 16px;
     }
 }
 
