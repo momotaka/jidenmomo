@@ -23,6 +23,18 @@ function initAutoSave() {
     
     let saveTimeout;
     let lastSavedContent = answerTextarea.value;
+    let isSaving = false;
+    
+    // ローカルストレージにも一時保存
+    const localStorageKey = `answer_${questionId.value}`;
+    
+    // ページ読み込み時にローカルストレージから復元
+    const savedLocal = localStorage.getItem(localStorageKey);
+    if (savedLocal && savedLocal !== answerTextarea.value) {
+        if (confirm('前回の未保存データがあります。復元しますか？')) {
+            answerTextarea.value = savedLocal;
+        }
+    }
     
     // テキストエリアの変更を監視
     answerTextarea.addEventListener('input', function() {
@@ -31,17 +43,23 @@ function initAutoSave() {
         // 内容が変更されていない場合は保存しない
         if (this.value === lastSavedContent) return;
         
+        // ローカルストレージに即座に保存
+        localStorage.setItem(localStorageKey, this.value);
+        
         // 保存中の表示
         showSaveStatus('saving', '保存中...');
         
-        // 1秒後に自動保存
+        // 2秒後に自動保存（ネットワーク負荷軽減）
         saveTimeout = setTimeout(() => {
-            saveAnswer(questionId.value, this.value);
-        }, 1000);
+            if (!isSaving) {
+                saveAnswer(questionId.value, this.value);
+            }
+        }, 2000);
     });
     
     // 回答を保存する関数
     async function saveAnswer(qId, answer) {
+        isSaving = true;
         try {
             const response = await fetch('api.php?action=save', {
                 method: 'POST',
@@ -60,6 +78,9 @@ function initAutoSave() {
                 lastSavedContent = answer;
                 showSaveStatus('saved', '保存しました');
                 
+                // 保存成功したらローカルストレージをクリア
+                localStorage.removeItem(localStorageKey);
+                
                 // 3秒後に保存メッセージを非表示
                 setTimeout(() => {
                     hideSaveStatus();
@@ -70,6 +91,8 @@ function initAutoSave() {
         } catch (error) {
             console.error('Save error:', error);
             showSaveStatus('error', 'エラー: ' + error.message);
+        } finally {
+            isSaving = false;
         }
     }
     

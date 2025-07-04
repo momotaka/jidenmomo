@@ -24,8 +24,8 @@ $total_questions = count($questions);
 $answers_file = 'data/answers.json';
 $answers_data = json_decode(file_get_contents($answers_file), true);
 
-// セッションIDの更新
-if ($answers_data['session_id'] !== $_SESSION['session_id']) {
+// セッションIDの初期設定（既存データは保持）
+if (empty($answers_data['session_id'])) {
     $answers_data['session_id'] = $_SESSION['session_id'];
     $answers_data['created_at'] = date('Y-m-d H:i:s');
 }
