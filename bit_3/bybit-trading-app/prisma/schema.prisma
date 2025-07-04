@@ -1,0 +1,130 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Candle {
+  id        Int      @id @default(autoincrement())
+  symbol    String
+  timeframe String
+  timestamp DateTime
+  open      Float
+  high      Float
+  low       Float
+  close     Float
+  volume    Float
+  createdAt DateTime @default(now())
+  
+  @@unique([symbol, timeframe, timestamp])
+  @@index([symbol, timestamp])
+  @@index([timestamp])
+}
+
+model Trade {
+  id            String   @id @default(uuid())
+  orderId       String   @unique
+  symbol        String
+  side          String   // buy or sell
+  type          String   // market or limit
+  amount        Float
+  price         Float?
+  executedPrice Float?
+  status        String   // pending, filled, cancelled, failed
+  strategy      String?  // 使用した戦略名
+  timestamp     DateTime
+  createdAt     DateTime @default(now())
+  
+  @@index([symbol, timestamp])
+  @@index([strategy])
+}
+
+model Position {
+  id          String   @id @default(uuid())
+  symbol      String
+  side        String   // long or short
+  size        Float
+  entryPrice  Float
+  currentPrice Float?
+  pnl         Float?
+  pnlPercent  Float?
+  margin      Float
+  openTime    DateTime
+  closeTime   DateTime?
+  closedPrice Float?
+  realizedPnl Float?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([symbol, openTime])
+}
+
+model Balance {
+  id        Int      @id @default(autoincrement())
+  coin      String
+  free      Float
+  used      Float
+  total     Float
+  timestamp DateTime
+  createdAt DateTime @default(now())
+  
+  @@index([coin, timestamp])
+}
+
+model Signal {
+  id         String   @id @default(uuid())
+  symbol     String
+  strategy   String
+  action     String   // buy, sell, hold
+  strength   Float    // 0-1の信号強度
+  indicators Json     // 使用した指標の値
+  timestamp  DateTime
+  executed   Boolean  @default(false)
+  tradeId    String?  // 実行されたトレードのID
+  createdAt  DateTime @default(now())
+  
+  @@index([symbol, timestamp])
+  @@index([strategy, timestamp])
+}
+
+model AlertRule {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  symbol      String?  // 特定の銘柄向け、nullなら全銘柄
+  type        String   // price, technical, risk, trade, custom
+  condition   Json     // 条件の詳細設定
+  actions     Json     // 通知方法（email, webhook, etc）
+  enabled     Boolean  @default(true)
+  priority    String   @default("medium") // low, medium, high, critical
+  cooldown    Int      @default(300) // 再通知までの待機時間（秒）
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  alerts      Alert[]
+  
+  @@index([symbol, enabled])
+  @@index([type, enabled])
+}
+
+model Alert {
+  id          String    @id @default(uuid())
+  ruleId      String
+  rule        AlertRule @relation(fields: [ruleId], references: [id])
+  symbol      String?
+  type        String
+  severity    String    // info, warning, error, critical
+  title       String
+  message     String
+  data        Json?     // アラートに関連するデータ
+  triggered   DateTime  @default(now())
+  acknowledged Boolean  @default(false)
+  acknowledgedAt DateTime?
+  
+  @@index([ruleId, triggered])
+  @@index([symbol, triggered])
+  @@index([acknowledged, triggered])
+}

@@ -1,0 +1,40 @@
+{
+  "name": "x-auto-poster",
+  "version": "1.0.0",
+  "description": "AI-powered automatic posting bot for X (Twitter)",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "setup": "node setup.js",
+    "start": "node src/index.js",
+    "cli": "node src/cli.js",
+    "interactive": "node src/cli.js interactive",
+    "test-post": "node src/cli.js test",
+    "post": "node src/cli.js post",
+    "preview": "node src/cli.js preview",
+    "news": "node src/cli.js news",
+    "dev": "node --watch src/index.js"
+  },
+  "keywords": [
+    "twitter",
+    "x",
+    "bot",
+    "automation",
+    "ai"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.10.0",
+    "chalk": "^5.4.1",
+    "commander": "^11.1.0",
+    "dotenv": "^16.3.1",
+    "inquirer": "^12.7.0",
+    "node-cron": "^3.0.3",
+    "openai": "^4.24.0",
+    "rss-parser": "^3.13.0",
+    "sqlite3": "^5.1.6",
+    "twitter-api-v2": "^1.15.2",
+    "winston": "^3.11.0"
+  }
+}

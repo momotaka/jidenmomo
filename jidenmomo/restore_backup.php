@@ -5,7 +5,22 @@ session_start();
 if (isset($_POST['restore'])) {
     $csv_file = $_POST['csv_file'] ?? '';
     if (file_exists($csv_file)) {
-        $csv_data = array_map('str_getcsv', file($csv_file));
+        // CSVファイルを正しく読み込む
+        $csv_content = file_get_contents($csv_file);
+        
+        // BOMを削除
+        $bom = pack('H*','EFBBBF');
+        $csv_content = preg_replace("/^$bom/", '', $csv_content);
+        
+        // CSVを解析
+        $lines = explode("\n", $csv_content);
+        $csv_data = [];
+        
+        foreach ($lines as $line) {
+            if (!empty(trim($line))) {
+                $csv_data[] = str_getcsv($line);
+            }
+        }
         
         $answers_data = [
             'session_id' => $_SESSION['session_id'] ?? '',
@@ -14,14 +29,20 @@ if (isset($_POST['restore'])) {
             'answers' => []
         ];
         
+        $restored_count = 0;
         foreach ($csv_data as $index => $row) {
             if ($index === 0) continue; // ヘッダースキップ
-            if (count($row) >= 6 && !empty($row[3])) {
-                $answers_data['answers'][$row[0]] = [
-                    'answer' => $row[3],
+            // CSVの形式: 質問ID, カテゴリ, 質問文, 回答, 文字数, 更新日時
+            if (count($row) >= 6 && !empty(trim($row[3]))) {
+                $question_id = trim($row[0]);
+                $answer_text = $row[3]; // trim()を使わない（改行などを保持）
+                
+                $answers_data['answers'][$question_id] = [
+                    'answer' => $answer_text,
                     'character_count' => intval($row[4]),
                     'updated_at' => $row[5]
                 ];
+                $restored_count++;
             }
         }
         
@@ -31,7 +52,7 @@ if (isset($_POST['restore'])) {
         }
         
         file_put_contents('data/answers.json', json_encode($answers_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-        $message = 'CSVファイルから復元しました';
+        $message = "CSVファイルから{$restored_count}件の回答を復元しました";
     } else {
         $message = 'CSVファイルが見つかりません';
     }
