@@ -59,11 +59,23 @@ textarea.form-control {
     transition: border-color 0.3s;
     font-size: 16px;
     line-height: 1.8;
+    resize: vertical;
 }
 
 textarea.form-control:focus {
     border-color: var(--secondary-color);
     box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+/* 大きなテキストエリア用の特別なスタイル */
+#answer {
+    font-family: 'Noto Sans JP', sans-serif;
+    padding: 20px;
+    background-color: #fafafa;
+}
+
+#answer:focus {
+    background-color: #ffffff;
 }
 
 /* ボタン */
