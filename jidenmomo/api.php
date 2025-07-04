@@ -2,28 +2,28 @@
 session_start();
 header('Content-Type: application/json; charset=utf-8');
 
-// �÷����ï
+// セッションチェック
 if (!isset($_SESSION['session_id'])) {
     http_response_code(401);
     echo json_encode(['error' => 'Unauthorized']);
     exit;
 }
 
-// ꯨ�����h�����n֗
+// リクエストメソッドとアクションの取得
 $method = $_SERVER['REQUEST_METHOD'];
 $action = $_GET['action'] ?? '';
 
-// ���ա��nѹ
+// データファイルのパス
 $questions_file = 'data/questions.json';
 $answers_file = 'data/answers.json';
 
-// ���(nM
+// レスポンス用の配列
 $response = [];
 
 try {
     switch ($action) {
         case 'questions':
-            // �O���n֗
+            // 質問データの取得
             if ($method === 'GET') {
                 $questions_data = json_decode(file_get_contents($questions_file), true);
                 $response = $questions_data;
@@ -31,27 +31,27 @@ try {
             break;
 
         case 'save':
-            // �Tn�X
+            // 回答の保存
             if ($method === 'POST') {
                 $input = json_decode(file_get_contents('php://input'), true);
                 
                 if (!isset($input['questionId']) || !isset($input['answer'])) {
-                    throw new Exception('������L�WfD~Y');
+                    throw new Exception('必須パラメータが不足しています');
                 }
                 
                 $question_id = $input['questionId'];
                 $answer_text = $input['answer'];
                 
-                // �Xn�T������
+                // 既存の回答データを読み込み
                 $answers_data = json_decode(file_get_contents($answers_file), true);
                 
-                // �÷��IDn��
+                // セッションIDの更新
                 if ($answers_data['session_id'] !== $_SESSION['session_id']) {
                     $answers_data['session_id'] = $_SESSION['session_id'];
                     $answers_data['created_at'] = date('Y-m-d H:i:s');
                 }
                 
-                // �T���n��
+                // 回答データの更新
                 $answers_data['answers'][$question_id] = [
                     'answer' => $answer_text,
                     'updated_at' => date('Y-m-d H:i:s'),
@@ -60,21 +60,21 @@ try {
                 
                 $answers_data['updated_at'] = date('Y-m-d H:i:s');
                 
-                // ա��k�X
+                // ファイルに保存
                 if (file_put_contents($answers_file, json_encode($answers_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)) === false) {
-                    throw new Exception('ա��n�Xk1WW~W_');
+                    throw new Exception('ファイルの保存に失敗しました');
                 }
                 
                 $response = [
                     'success' => true,
-                    'message' => '�XW~W_',
+                    'message' => '保存しました',
                     'saved_at' => date('Y-m-d H:i:s')
                 ];
             }
             break;
 
         case 'progress':
-            // 2W���n֗
+            // 進捗データの取得
             if ($method === 'GET') {
                 $questions_data = json_decode(file_get_contents($questions_file), true);
                 $answers_data = json_decode(file_get_contents($answers_file), true);
@@ -103,28 +103,28 @@ try {
             break;
 
         case 'upload':
-            // ա��������
+            // ファイルアップロード処理
             if ($method === 'POST') {
                 if (!isset($_FILES['file'])) {
-                    throw new Exception('ա��L������U�fD~[�');
+                    throw new Exception('ファイルがアップロードされていません');
                 }
                 
                 $file = $_FILES['file'];
                 $upload_dir = 'data/uploads/';
                 
-                // ������ǣ���n��
+                // アップロードディレクトリの確認
                 if (!is_dir($upload_dir)) {
                     mkdir($upload_dir, 0755, true);
                 }
                 
-                // ա��n�÷��IDh��๿�ג(	
+                // ファイル名の生成（セッションIDとタイムスタンプを使用）
                 $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
                 $filename = $_SESSION['session_id'] . '_' . time() . '.' . $extension;
                 $filepath = $upload_dir . $filename;
                 
-                // ա��n��
+                // ファイルの移動
                 if (!move_uploaded_file($file['tmp_name'], $filepath)) {
-                    throw new Exception('ա��n�Xk1WW~W_');
+                    throw new Exception('ファイルの保存に失敗しました');
                 }
                 
                 $response = [
@@ -138,14 +138,14 @@ try {
             break;
 
         case 'export':
-            // ���n������
+            // データのエクスポート
             if ($method === 'GET') {
                 $format = $_GET['format'] ?? 'json';
                 $answers_data = json_decode(file_get_contents($answers_file), true);
                 $questions_data = json_decode(file_get_contents($questions_file), true);
                 
                 if ($format === 'csv') {
-                    // CSV������
+                    // CSVエクスポート
                     header('Content-Type: text/csv; charset=utf-8');
                     header('Content-Disposition: attachment; filename="autobiography_' . date('Ymd_His') . '.csv"');
                     
@@ -153,10 +153,10 @@ try {
                     // BOM for Excel
                     fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));
                     
-                    // ����L
-                    fputcsv($output, ['�OID', '�ƴ��', '�O', '�T', '�Wp', '���B']);
+                    // ヘッダー行
+                    fputcsv($output, ['質問ID', 'カテゴリー', '質問', '回答', '文字数', '更新日時']);
                     
-                    // ���L
+                    // データ行
                     foreach ($questions_data['questions'] as $question) {
                         $answer_data = $answers_data['answers'][$question['id']] ?? null;
                         fputcsv($output, [
@@ -172,7 +172,7 @@ try {
                     fclose($output);
                     exit;
                 } else {
-                    // JSON������
+                    // JSONエクスポート
                     $response = [
                         'questions' => $questions_data,
                         'answers' => $answers_data
@@ -182,7 +182,7 @@ try {
             break;
 
         default:
-            throw new Exception('!�j�����gY');
+            throw new Exception('無効なアクションです');
     }
     
     echo json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);

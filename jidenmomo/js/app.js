@@ -1,10 +1,10 @@
-// L��\���� - JavaScriptա��
+// 経営者自伝作成システム - JavaScriptファイル
 
 document.addEventListener('DOMContentLoaded', function() {
-    // ���X_�n
+    // 自動保存機能の初期化
     initAutoSave();
     
-    // թ���n2b
+    // フォーム送信の防止
     const forms = document.querySelectorAll('form');
     forms.forEach(form => {
         form.addEventListener('submit', function(e) {
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// ���X_�
+// 自動保存機能
 function initAutoSave() {
     const answerTextarea = document.getElementById('answer');
     const saveStatus = document.getElementById('saveStatus');
@@ -24,23 +24,23 @@ function initAutoSave() {
     let saveTimeout;
     let lastSavedContent = answerTextarea.value;
     
-    // ƭ�Ȩ�n	���
+    // テキストエリアの変更を監視
     answerTextarea.addEventListener('input', function() {
         clearTimeout(saveTimeout);
         
-        // ��L	�U�fDjD4o�XWjD
+        // 内容が変更されていない場合は保存しない
         if (this.value === lastSavedContent) return;
         
-        // �X-nh:
-        showSaveStatus('saving', '�X-...');
+        // 保存中の表示
+        showSaveStatus('saving', '保存中...');
         
-        // 1Ҍk���X
+        // 1秒後に自動保存
         saveTimeout = setTimeout(() => {
             saveAnswer(questionId.value, this.value);
         }, 1000);
     });
     
-    // �T��XY��p
+    // 回答を保存する関数
     async function saveAnswer(qId, answer) {
         try {
             const response = await fetch('api.php?action=save', {
@@ -58,22 +58,22 @@ function initAutoSave() {
             
             if (response.ok && data.success) {
                 lastSavedContent = answer;
-                showSaveStatus('saved', '�XW~W_');
+                showSaveStatus('saved', '保存しました');
                 
-                // 3Ҍk�X�û���^h:
+                // 3秒後に保存メッセージを非表示
                 setTimeout(() => {
                     hideSaveStatus();
                 }, 3000);
             } else {
-                throw new Error(data.error || '�Xk1WW~W_');
+                throw new Error(data.error || '保存に失敗しました');
             }
         } catch (error) {
             console.error('Save error:', error);
-            showSaveStatus('error', '���: ' + error.message);
+            showSaveStatus('error', 'エラー: ' + error.message);
         }
     }
     
-    // �X�K�h:Y��p
+    // 保存状態を表示する関数
     function showSaveStatus(type, message) {
         if (!saveStatus) return;
         
@@ -83,14 +83,14 @@ function initAutoSave() {
         saveStatus.classList.remove('d-none');
     }
     
-    // �X�K�^h:kY��p
+    // 保存状態を非表示にする関数
     function hideSaveStatus() {
         if (!saveStatus) return;
         saveStatus.classList.add('d-none');
     }
 }
 
-// ա�������_�
+// ファイルアップロード機能
 function uploadFile(inputElement) {
     const file = inputElement.files[0];
     if (!file) return;
@@ -98,7 +98,7 @@ function uploadFile(inputElement) {
     const formData = new FormData();
     formData.append('file', file);
     
-    // �������
+    // アップロード処理
     fetch('api.php?action=upload', {
         method: 'POST',
         body: formData
@@ -106,23 +106,23 @@ function uploadFile(inputElement) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert('ա��L������U�~W_: ' + data.filename);
+            alert('ファイルがアップロードされました: ' + data.filename);
         } else {
-            throw new Error(data.error || '������k1WW~W_');
+            throw new Error(data.error || 'アップロードに失敗しました');
         }
     })
     .catch(error => {
         console.error('Upload error:', error);
-        alert('���: ' + error.message);
+        alert('エラー: ' + error.message);
     });
 }
 
-// ���������_�
+// データエクスポート機能
 function exportData(format) {
     window.location.href = 'api.php?action=export&format=' + format;
 }
 
-// 2W���n֗
+// 進捗データの取得
 async function fetchProgress() {
     try {
         const response = await fetch('api.php?action=progress');
@@ -134,26 +134,26 @@ async function fetchProgress() {
     }
 }
 
-// ���w�Bn��
+// ページ遷移時の確認
 window.addEventListener('beforeunload', function(e) {
     const answerTextarea = document.getElementById('answer');
     if (answerTextarea && answerTextarea.value !== '') {
         const saveStatus = document.getElementById('saveStatus');
         if (saveStatus && saveStatus.classList.contains('saving')) {
             e.preventDefault();
-            e.returnValue = '�X-gY�����~YK';
+            e.returnValue = '保存中です。ページを離れますか？';
         }
     }
 });
 
-// Enter��gn��2P
+// Enterキーでの誤送信を防ぐ
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
         e.preventDefault();
     }
 });
 
-// Chart.js�(W_����;�;b(	
+// Chart.jsを使用したグラフ描画（管理画面用）
 function drawProgressChart(canvasId, data) {
     const ctx = document.getElementById(canvasId);
     if (!ctx) return;
@@ -186,7 +186,7 @@ function drawProgressChart(canvasId, data) {
     });
 }
 
-// ��ƣ�ƣ�p
+// ユーティリティ関数
 function formatDate(dateString) {
     const date = new Date(dateString);
     return date.toLocaleDateString('ja-JP', {

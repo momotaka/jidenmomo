@@ -1,4 +1,4 @@
-/* L¶ê\·¹Æà - ¹¿¤ë·üÈ */
+/* çµŒå–¶è€…è‡ªä¼ä½œæˆã‚·ã‚¹ãƒ†ãƒ  - ã‚¹ã‚¿ã‚¤ãƒ«ã‚·ãƒ¼ãƒˆ */
 
 :root {
     --primary-color: #2c3e50;
@@ -17,13 +17,13 @@ body {
     background-color: #f8f9fa;
 }
 
-/* ÊÓ²ü·çóĞü */
+/* ãƒŠãƒ“ã‚²ãƒ¼ã‚·ãƒ§ãƒ³ãƒãƒ¼ */
 .navbar-brand {
     font-weight: bold;
     color: var(--primary-color) !important;
 }
 
-/* «üÉ */
+/* ã‚«ãƒ¼ãƒ‰ */
 .card {
     border: none;
     border-radius: 10px;
@@ -40,7 +40,7 @@ body {
     font-weight: 500;
 }
 
-/* 2WĞü */
+/* é€²æ—ãƒãƒ¼ */
 .progress {
     height: 20px;
     border-radius: 10px;
@@ -52,7 +52,7 @@ body {
     transition: width 0.6s ease;
 }
 
-/* Æ­¹È¨ê¢ */
+/* ãƒ†ã‚­ã‚¹ãƒˆã‚¨ãƒªã‚¢ */
 textarea.form-control {
     border-radius: 8px;
     border: 2px solid #e9ecef;
@@ -66,7 +66,7 @@ textarea.form-control:focus {
     box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
 }
 
-/* Ü¿ó */
+/* ãƒœã‚¿ãƒ³ */
 .btn {
     border-radius: 8px;
     padding: 10px 20px;
@@ -85,14 +85,14 @@ textarea.form-control:focus {
     transform: translateY(-1px);
 }
 
-/* ĞÃ¸ */
+/* ãƒãƒƒã‚¸ */
 .badge {
     padding: 5px 10px;
     font-weight: normal;
     border-radius: 5px;
 }
 
-/* ÆüÖë */
+/* ãƒ†ãƒ¼ãƒ–ãƒ« */
 .table {
     background-color: white;
 }
@@ -103,7 +103,7 @@ textarea.form-control:focus {
     font-weight: 600;
 }
 
-/* ¢éüÈ */
+/* ã‚¢ãƒ©ãƒ¼ãƒˆ */
 .alert {
     border-radius: 8px;
     border: none;
@@ -119,7 +119,7 @@ textarea.form-control:focus {
     color: #721c24;
 }
 
-/* êÕİX¤ó¸±ü¿ü */
+/* è‡ªå‹•ä¿å­˜ã‚¤ãƒ³ã‚¸ã‚±ãƒ¼ã‚¿ãƒ¼ */
 #saveStatus {
     transition: opacity 0.3s;
 }
@@ -139,7 +139,7 @@ textarea.form-control:focus {
     color: #842029;
 }
 
-/* ì¹İó·ÖşÜ */
+/* ãƒ¬ã‚¹ãƒãƒ³ã‚·ãƒ–å¯¾å¿œ */
 @media (max-width: 768px) {
     .container {
         padding-left: 15px;
@@ -160,7 +160,7 @@ textarea.form-control:focus {
     }
 }
 
-/* ¢Ëáü·çó */
+/* ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -176,7 +176,7 @@ textarea.form-control:focus {
     animation: fadeIn 0.5s ease-out;
 }
 
-/* ¡;b(¹¿¤ë */
+/* ç®¡ç†ç”»é¢ç”¨ã‚¹ã‚¿ã‚¤ãƒ« */
 .admin-section {
     margin-bottom: 3rem;
 }
@@ -199,7 +199,7 @@ textarea.form-control:focus {
     margin: 0.5rem 0;
 }
 
-/* ÁãüÈ( */
+/* ãƒãƒ£ãƒ¼ãƒˆç”¨ */
 .chart-container {
     position: relative;
     height: 300px;
