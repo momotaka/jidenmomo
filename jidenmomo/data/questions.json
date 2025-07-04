@@ -200,6 +200,146 @@
       "question": "同じ業界で起業を目指す若者へのメッセージと、成功するために必要な心構えを教えてください。",
       "required": false,
       "type": "text"
+    },
+    {
+      "id": "q026",
+      "category": "childhood",
+      "question": "両親の職業や価値観が、あなたの「ものを大切にする」「環境を意識する」考え方にどのような影響を与えましたか？具体的なエピソードがあれば教えてください。",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q027",
+      "category": "childhood",
+      "question": "幼少期に経験した貧しさや不便さが、現在の事業における「無駄をなくす」「効率化する」という考え方にどうつながっていますか？",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q028",
+      "category": "youth",
+      "question": "学生時代に経験したアルバイトや課外活動で、現在の経営に活きている具体的なスキルや考え方はありますか？",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q029",
+      "category": "youth",
+      "question": "思春期に感じた社会への疑問や憤りが、後の起業の原動力になったことはありますか？具体的なエピソードを教えてください。",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q030",
+      "category": "early_career",
+      "question": "会社員時代に目撃した業界の非効率や矛盾で、「自分ならこうする」と思った具体的な事例を教えてください。",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q031",
+      "category": "early_career",
+      "question": "独立前に密かに準備していたことや、会社に内緒で行っていた起業準備があれば教えてください。",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q032",
+      "category": "entrepreneurship",
+      "question": "創業資金の調達で苦労したエピソードと、最終的にどのように資金を確保したか詳しく教えてください。",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q033",
+      "category": "entrepreneurship",
+      "question": "起業初期に家族（配偶者、子供、両親）との関係で苦労したことと、理解を得るために努力したことを教えてください。",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q034",
+      "category": "entrepreneurship",
+      "question": "最初の従業員を雇用する際の不安と決断の理由、そしてその人が会社にもたらした変化を教えてください。",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q035",
+      "category": "growth",
+      "question": "事業拡大期に直面した資金繰りの危機と、それを乗り越えるために取った具体的な行動を教えてください。",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q036",
+      "category": "growth",
+      "question": "優秀な人材の獲得と定着のために実践してきた独自の工夫や、失敗から学んだ教訓を教えてください。",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q037",
+      "category": "growth",
+      "question": "大手企業との競争や、新規参入業者への対抗策として実施してきた具体的な施策を教えてください。",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q038",
+      "category": "growth",
+      "question": "事業の多角化や新サービスの立ち上げで失敗した経験と、そこから得た教訓を教えてください。",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q039",
+      "category": "present_future",
+      "question": "デジタル化やAI活用など、テクノロジーの進化に対する取り組みと今後の展望を教えてください。",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q040",
+      "category": "present_future",
+      "question": "地域社会への貢献活動や、業界全体の発展のために行っている活動があれば教えてください。",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q041",
+      "category": "present_future",
+      "question": "経営者として最も困難な決断（リストラ、事業撤退など）をした経験と、その際の心情を教えてください。",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q042",
+      "category": "present_future",
+      "question": "自身の健康管理やワークライフバランスについて、どのような工夫をしていますか？過去の失敗談も含めて教えてください。",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q043",
+      "category": "present_future",
+      "question": "もし20代に戻れるとしたら、同じ道を選びますか？違う選択をするとしたら何を変えますか？",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q044",
+      "category": "present_future",
+      "question": "あなたの会社や事業が100年後も続いているとしたら、どのような形になっていてほしいですか？",
+      "required": false,
+      "type": "text"
+    },
+    {
+      "id": "q045",
+      "category": "present_future",
+      "question": "人生の最後に振り返った時、「これを成し遂げた」と誇れるようなレガシー（遺産）は何だと思いますか？",
+      "required": false,
+      "type": "text"
     }
   ]
 }
