@@ -90,11 +90,13 @@ $csv_files = glob('data/*.csv');
                                         <td><?php echo date('Y-m-d H:i:s', filemtime($file)); ?></td>
                                         <td><?php echo number_format(filesize($file)); ?> bytes</td>
                                         <td>
-                                            <button type="submit" name="restore" value="1" class="btn btn-sm btn-primary"
-                                                    onclick="return confirm('このファイルから復元しますか？')">
-                                                復元
-                                            </button>
-                                            <input type="hidden" name="csv_file" value="<?php echo $file; ?>">
+                                            <form method="POST" style="display: inline;">
+                                                <input type="hidden" name="csv_file" value="<?php echo $file; ?>">
+                                                <button type="submit" name="restore" value="1" class="btn btn-sm btn-primary"
+                                                        onclick="return confirm('このファイルから復元しますか？\n現在のデータは上書きされます。')">
+                                                    <i class="bi bi-upload"></i> 復元
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                     <?php endforeach; ?>

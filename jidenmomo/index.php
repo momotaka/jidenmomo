@@ -46,9 +46,18 @@ if (!isset($_SESSION['session_id'])) {
                             <a href="progress.php" class="btn btn-outline-secondary">
                                 進捗状況を確認する
                             </a>
-                            <a href="admin.php" class="btn btn-outline-info btn-sm">
-                                管理画面（回答データの確認・編集）
-                            </a>
+                            <div class="row g-2">
+                                <div class="col-6">
+                                    <a href="admin.php" class="btn btn-outline-info btn-sm w-100">
+                                        管理画面
+                                    </a>
+                                </div>
+                                <div class="col-6">
+                                    <a href="restore_backup.php" class="btn btn-outline-success btn-sm w-100">
+                                        データ復元
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                         
                         <div class="mt-5 text-center text-muted">

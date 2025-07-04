@@ -52,6 +52,7 @@ $completion_rate = $total_questions > 0 ? round($total_answered / $total_questio
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>管理画面 - 経営者自伝作成システム</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -161,16 +162,26 @@ $completion_rate = $total_questions > 0 ? round($total_answered / $total_questio
         <div class="card mb-4">
             <div class="card-body">
                 <h5 class="card-title">データ操作</h5>
-                <div class="btn-group" role="group">
-                    <button class="btn btn-primary" onclick="exportData('json')">
-                        JSONエクスポート
-                    </button>
-                    <button class="btn btn-success" onclick="exportData('csv')">
-                        CSVエクスポート
-                    </button>
-                    <button class="btn btn-warning" onclick="if(confirm('すべての回答データをクリアしますか？')) clearAllData()">
-                        データクリア
-                    </button>
+                <div class="d-grid gap-2">
+                    <div class="btn-group" role="group">
+                        <button class="btn btn-primary" onclick="exportData('json')">
+                            <i class="bi bi-download"></i> JSONエクスポート
+                        </button>
+                        <button class="btn btn-success" onclick="exportData('csv')">
+                            <i class="bi bi-file-earmark-spreadsheet"></i> CSVエクスポート
+                        </button>
+                    </div>
+                    <div class="btn-group" role="group">
+                        <a href="restore_backup.php" class="btn btn-info">
+                            <i class="bi bi-upload"></i> バックアップから復元
+                        </a>
+                        <button class="btn btn-warning" onclick="if(confirm('すべての回答データをクリアしますか？')) clearAllData()">
+                            <i class="bi bi-trash"></i> データクリア
+                        </button>
+                    </div>
+                </div>
+                <div class="mt-2 text-muted">
+                    <small>※ CSVファイルがある場合は「バックアップから復元」でインポートできます</small>
                 </div>
             </div>
         </div>
