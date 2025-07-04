@@ -8,19 +8,18 @@ if (isset($_POST['restore'])) {
         // CSVファイルを正しく読み込む
         $csv_content = file_get_contents($csv_file);
         
-        // BOMを削除
-        $bom = pack('H*','EFBBBF');
-        $csv_content = preg_replace("/^$bom/", '', $csv_content);
-        
-        // CSVを解析
-        $lines = explode("\n", $csv_content);
-        $csv_data = [];
-        
-        foreach ($lines as $line) {
-            if (!empty(trim($line))) {
-                $csv_data[] = str_getcsv($line);
-            }
+        // BOMを削除（UTF-8 BOM: EF BB BF）
+        if (substr($csv_content, 0, 3) === "\xEF\xBB\xBF") {
+            $csv_content = substr($csv_content, 3);
         }
+        
+        // 改行コードを統一
+        $csv_content = str_replace(["\r\n", "\r"], "\n", $csv_content);
+        
+        // CSVファイルを正しくパースする（複数行の値に対応）
+        $fp = fopen('php://temp', 'r+');
+        fputs($fp, $csv_content);
+        rewind($fp);
         
         $answers_data = [
             'session_id' => $_SESSION['session_id'] ?? '',
@@ -30,12 +29,18 @@ if (isset($_POST['restore'])) {
         ];
         
         $restored_count = 0;
-        foreach ($csv_data as $index => $row) {
-            if ($index === 0) continue; // ヘッダースキップ
+        $header_skipped = false;
+        
+        while (($row = fgetcsv($fp)) !== FALSE) {
+            if (!$header_skipped) {
+                $header_skipped = true;
+                continue; // ヘッダースキップ
+            }
+            
             // CSVの形式: 質問ID, カテゴリ, 質問文, 回答, 文字数, 更新日時
-            if (count($row) >= 6 && !empty(trim($row[3]))) {
+            if (count($row) >= 6 && $row[3] !== '') {
                 $question_id = trim($row[0]);
-                $answer_text = $row[3]; // trim()を使わない（改行などを保持）
+                $answer_text = $row[3]; // 回答テキスト（trimしない）
                 
                 $answers_data['answers'][$question_id] = [
                     'answer' => $answer_text,
@@ -45,6 +50,8 @@ if (isset($_POST['restore'])) {
                 $restored_count++;
             }
         }
+        
+        fclose($fp);
         
         // バックアップを作成してから上書き
         if (file_exists('data/answers.json')) {
