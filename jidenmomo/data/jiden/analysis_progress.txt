@@ -1,0 +1,11 @@
+Chapters read so far:
+1. chapter_01_gyakushi_tanjou.md
+2. chapter_02_futoukou_no_hajimari.md
+3. chapter_03_pasokon_to_shakai_fukki.md
+4. chapter_04_nikutai_roudou_e.md
+5. chapter_05_zenra_to_kakusei.md
+6. chapter_06_jc_de_no_seichou.md
+7. chapter_06_jc_nyuukai.md
+8. chapter_07_korona_to_utsujou.md
+9. chapter_07_shukkou_to_onsen_iinkai.md
+10. chapter_08_yukari_to_no_deai.md
